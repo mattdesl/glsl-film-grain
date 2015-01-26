@@ -1,0 +1,60 @@
+{
+  "name": "glsl-film-grain",
+  "version": "1.0.0",
+  "description": "natural looking film grain using noise functions",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "name": "Matt DesLauriers",
+    "email": "dave.des@gmail.com",
+    "url": "https://github.com/mattdesl"
+  },
+  "dependencies": {
+    "glsl-noise": "0.0.0",
+    "glsl-random": "0.0.4"
+  },
+  "devDependencies": {
+    "a-big-triangle": "^1.0.0",
+    "canvas-fit": "^1.2.0",
+    "dom-css": "^1.0.6",
+    "domready": "^1.0.7",
+    "gl-blend-demo": "^1.0.1",
+    "gl-checker-background": "^1.0.0",
+    "gl-checker-texture": "^1.0.0",
+    "gl-texture2d": "^2.0.8",
+    "gl-white-texture": "^1.0.0",
+    "glsl-blend-soft-light": "^1.0.4",
+    "glsl-luma": "^1.0.1",
+    "glslify": "^1.6.0",
+    "img": "^1.0.0",
+    "lena": "^1.0.0",
+    "raf-loop": "^1.0.1",
+    "tape": "^3.4.0",
+    "webgl-context": "^2.1.1",
+    "wzrd": "^1.2.1",
+    "xtend": "^4.0.0"
+  },
+  "scripts": {
+    "start": "wzrd demo.js:bundle.js -- -d -t glslify"
+  },
+  "keywords": [
+    "noise",
+    "film",
+    "grain",
+    "lens",
+    "imperfections",
+    "ecosystem:stackgl",
+    "stackgl",
+    "webgl",
+    "glsl",
+    "glslify"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mattdesl/glsl-film-grain.git"
+  },
+  "homepage": "https://github.com/mattdesl/glsl-film-grain",
+  "bugs": {
+    "url": "https://github.com/mattdesl/glsl-film-grain/issues"
+  }
+}
