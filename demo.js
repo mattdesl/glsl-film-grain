@@ -1,8 +1,7 @@
 var triangle = require('a-big-triangle')
 var loop = require('raf-loop')
 var Texture = require('gl-texture2d')
-var EmptyTexture = require('gl-white-texture')
-var load = require('img')
+var css = require('dom-css')
 
 //get a shader
 var glslify = require('glslify')
@@ -11,82 +10,95 @@ var createShader = glslify({
     vertex: './shaders/blend.vert'
 })
 
-var size = 512
-var dpr = 1// window.devicePixelRatio||1
-
-//create our WebGL test example
+//create the testbed
 var app = create({
     shader: createShader,
-    width: size * dpr,
-    height: size * dpr 
+    width: 512,
+    height: 512 
 }).start()
 
 var canvas = app.gl.canvas
 
 //add to DOM
 require('domready')(function() {
-    require('dom-css')(canvas, {
-        width: size,
-        height: size
-    })
+    var body = document.body
 
-    document.body.style.margin = '0'
-    document.body.appendChild(canvas)
+    css(body, 'margin', 0)
+    body.appendChild(canvas)
+
+    var info = body.appendChild(document.createElement('div'))
+    info.innerHTML = [
+        '<p>click the image to toggle</p>',
+        '<p>hover over it to animate the grain</p>'
+    ].join('')
+    
+    css(info, {
+        lineHeight: '3px',
+        marginLeft: 20,
+        fontFamily: '"Georgia", serif'
+    })
 })
 
 function create(opt) {
     opt = opt || {}
 
-    var image = require('lena').transpose(1, 0, 2)
-
     //setup context & textures
     var gl = require('webgl-context')(opt)
     var shader = typeof opt.shader === 'function' ? opt.shader(gl) : opt.shader
 
+    //get a test image for our background
+    var image = require('lena').transpose(1, 0, 2)    
     var tex = Texture(gl, image)
-    // var tex = EmptyTexture(gl)
-    // load('screen.png', function(err, image) {
-    //     if (err) throw err
-    //     tex = Texture(gl, image)
-    // })
-    // var tex = require('gl-checker-texture')(gl, { colors: [
-    //     [0x50,0x50,0x50,0xff],
-    //     [0x46,0x46,0x46,0xff]
-    // ]})
-
-    gl.disable(gl.DEPTH_TEST)
 
     var time = 0
     var frame = 0
     var effect = true
+    var hover = false
     var app = loop(render)
     app.gl = gl
 
     //draw it initially
     render(0)
 
-    gl.canvas.addEventListener('click', function(ev) {
-        effect = !effect
-    })
+    //bind some controls 
+    addEvents(gl.canvas)
 
-    //return the context
     return app
 
     function render(dt) {
+        gl.clear(gl.COLOR_BUFFER_BIT)
         gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight)
 
+        //set up uniforms
         shader.bind()
+        shader.uniforms.resolution = [gl.drawingBufferWidth, gl.drawingBufferHeight]
         shader.uniforms.background = 0
         shader.uniforms.effect = effect ? 1 : 0
-        time += dt
-
-        if (time > 35) {
-            frame += 0.15
+        
+        //film grain tends to look good when you update it
+        //every N milliseconds, instead of every frame
+        time += hover ? dt : 0
+        if (time > 54) {
+            frame += 0.1
             time = 0
             shader.uniforms.time = frame
         }
 
+        //draw scene
         tex.bind()
         triangle(gl)
+    }
+
+    function addEvents(canvas) {
+        canvas.addEventListener('click', function(ev) {
+            ev.preventDefault()
+            effect = !effect
+        })
+        canvas.addEventListener('mouseover', function(ev) {
+            hover = true
+        })
+        canvas.addEventListener('mouseleave', function(ev) {
+            hover = false
+        }) 
     }
 }

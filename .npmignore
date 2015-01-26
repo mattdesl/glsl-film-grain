@@ -8,3 +8,5 @@ test.js
 demo/
 .npmignore
 LICENSE.md
+shaders/
+demo.js
