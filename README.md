@@ -4,6 +4,8 @@
 
 ![img](http://i.imgur.com/uXUivnH.png)
 
+[(click for demo)](http://mattdesl.github.io/glsl-film-grain)
+
 Natural looking film grain using 3D noise functions. Inspired by [Martins Upitis](http://devlog-martinsh.blogspot.ca/2013/05/image-imperfections-and-film-grain-post.html). 
 
 This is a fairly expensive technique to achieve film grain, but it looks more realistic than a [hash function](https://www.npmjs.com/package/glsl-random) and also produces better motion.
