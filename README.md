@@ -41,7 +41,7 @@ Returns a float for the monochromatic grain with the given options:
 - `texCoord` the UV coordinates of your scene
 - `resolution` the resolution of your scene in pixels, optionally scaled to adjust the grain size
 - `frame` the animation frame, which is an offset into the Z of the 3D noise
-- `q` is a coefficient for the offset calculation, and may evoke subtly different results.Defaults to 2.5
+- `q` is a coefficient for the offset calculation, and may evoke subtly different motion. Defaults to 2.5
 
 ## blending tips
 
