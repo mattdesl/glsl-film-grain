@@ -1,6 +1,6 @@
 {
   "name": "glsl-film-grain",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "description": "natural looking film grain using noise functions",
   "main": "index.js",
   "license": "MIT",
